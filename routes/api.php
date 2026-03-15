@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\CompanyController;
 use Illuminate\Support\Facades\Route;
 
 // Public auth routes
@@ -12,4 +13,5 @@ Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanc
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', [AuthController::class, 'user']);
     Route::apiResource('users', UserController::class);
+    Route::apiResource('companies', CompanyController::class);
 });
