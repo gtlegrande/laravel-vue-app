@@ -50,6 +50,45 @@
                         </IndexTableRow>
                     </template>
                 </IndexTable>
+                <div
+                    v-if="pagination.last_page > 1"
+                    class="card-footer d-flex align-items-center justify-content-between flex-wrap gap-2 bg-transparent border-top"
+                >
+                    <small class="text-muted">
+                        Showing {{ pagination.from }}–{{ pagination.to }} of {{ pagination.total }}
+                    </small>
+                    <nav aria-label="User list pagination">
+                        <ul class="pagination pagination-sm mb-0">
+                            <li class="page-item" :class="{ disabled: pagination.current_page <= 1 }">
+                                <button
+                                    type="button"
+                                    class="page-link"
+                                    :disabled="pagination.current_page <= 1"
+                                    aria-label="Previous page"
+                                    @click="fetchUsers(pagination.current_page - 1)"
+                                >
+                                    <i class="bi bi-chevron-left"></i>
+                                </button>
+                            </li>
+                            <li class="page-item disabled">
+                                <span class="page-link">
+                                    Page {{ pagination.current_page }} of {{ pagination.last_page }}
+                                </span>
+                            </li>
+                            <li class="page-item" :class="{ disabled: pagination.current_page >= pagination.last_page }">
+                                <button
+                                    type="button"
+                                    class="page-link"
+                                    :disabled="pagination.current_page >= pagination.last_page"
+                                    aria-label="Next page"
+                                    @click="fetchUsers(pagination.current_page + 1)"
+                                >
+                                    <i class="bi bi-chevron-right"></i>
+                                </button>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
             </div>
         </IndexTableState>
 
@@ -80,7 +119,7 @@ import ConfirmModal    from '../components/ConfirmModal.vue';
 import AppButton       from '../components/AppButton.vue';
 import CrudPageHeader  from '../components/CrudPageHeader.vue';
 
-const { users, loading, error, fetchUsers, createUser, updateUser, deleteUser } = useUsers();
+const { users, loading, error, pagination, fetchUsers, createUser, updateUser, deleteUser } = useUsers();
 
 const modalRef   = ref(null);
 const confirmRef = ref(null);

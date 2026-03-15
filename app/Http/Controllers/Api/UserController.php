@@ -19,7 +19,7 @@ class UserController extends Controller
         $users = User::orderBy('last_name')
             ->orderBy('first_name')
             ->orderBy('email')
-            ->get();
+            ->paginate(50);
 
         return UserResource::collection($users);
     }
